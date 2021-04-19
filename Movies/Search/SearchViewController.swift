@@ -23,15 +23,20 @@ class SearchViewController: UIViewController {
     }
     var dataSource: UICollectionViewDiffableDataSource<Section, Movie>?
     
+    private var dependencies: Dependencies!
     private var viewModel: SearchViewModelProtocol!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Film list"
         searchTextField.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
-        viewModel = Dependencies.shared.createSearchViewModel()
+        viewModel = dependencies.createSearchViewModel()
         viewModel.delegate = self
         configure()
+    }
+    
+    func setup(dependencies: Dependencies) {
+        self.dependencies = dependencies
     }
     
     private func configure() {
